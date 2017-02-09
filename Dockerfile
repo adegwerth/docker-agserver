@@ -20,7 +20,7 @@ USER arcgis
 
 ENV HOME /usr/local/arcgis
 
-RUN tar xvzf /tmp/ArcGIS_for_Server_Linux_1031_145870.tar.gz -C /tmp/ && /tmp/ArcGISServer/Setup -m silent -l yes -a /tmp/authorization.ecp
+RUN tar xvzf /tmp/ArcGIS_Server_Linux_105_154052.tar.gz -C /tmp/ && /tmp/ArcGISServer/Setup -m silent -l yes -a /tmp/ArcGISServer105all.ecp
 
 #对外暴露相关端口
 EXPOSE 1098 4000 4001 4002 4003 4004 6006 6080 6099 6443
