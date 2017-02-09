@@ -1,5 +1,5 @@
 #从官方CentOS7镜像构建
-FROM centos:7.2
+FROM centos:7
 
 MAINTAINER	Ning Zhou "zn19860115@gmail.com"
 
