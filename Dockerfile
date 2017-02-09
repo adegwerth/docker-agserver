@@ -33,13 +33,14 @@ RUN rm /tmp/ArcGIS_Server_Linux_105_154052.tar.gz && rm -rf /tmp/ArcGISServer
 
 #启动服务前必须先挂载公共存储目录
 #CMD /usr/local/arcgis/server/startserver.sh && tail -f /usr/local/arcgis/server/framework/etc/service_error.log
+CMD /usr/local/arcgis/server/startserver.sh
 
 #容器运行后默认执行的指令
 #ENTRYPOINT ["/usr/local/arcgis/server/startserver.sh"]
 
 #------------------------------------------------------------------------------------------------------------------------
 #构建镜像
-#docker build -t ags105 .
+#docker build -t="zhouning/ags105" .
 
 #运行镜像
 #docker-machine ssh default
