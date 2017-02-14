@@ -1,0 +1,48 @@
+#从官方CentOS7镜像构建
+FROM ubuntu:16.04
+
+MAINTAINER	Ning Zhou "zn19860115@gmail.com"
+
+#拷贝当前路径下所有文件到容器内的tmp目录下
+COPY ./* /tmp/
+
+
+RUN apt-get install -y net-tools && apt-get install -y wget && apt-get install -y libXtst && apt-get install -y libXi && apt-get install -y libXrender && apt-get install -y fontconfig && apt-get install -y freetype && apt-get install -y gettext && apt-get install -y libXfont && apt-get install -y mesa-libGL && apt-get install -y mesa-libGLU && apt-get install -y Xvfb && apt-get install -y vim && apt-get install -y tar && apt-get install -y hostname && apt-get install -y gettext-base && apt-get install -y libxtst6 && apt-get install -y libxi6 && apt-get install -y libxrender1
+
+#ADD指令会自动解压tar文件
+#ADD . /src
+
+RUN /usr/sbin/useradd --create-home --home-dir /usr/local/arcgis --shell /bin/bash arcgis 
+
+#RUN chown -R arcgis /src
+RUN chown -R arcgis /tmp
+
+RUN echo -e "arcgis soft nofile 65535\narcgis hard nofile 65535\narcgis soft nproc 25059\narcgis hard nproc 25059" >> /etc/security/limits.conf
+
+#镜像启动的容器以arcgis账户运行
+USER arcgis
+
+ENV HOME /usr/local/arcgis
+
+RUN tar xvzf /tmp/ArcGIS_Server_Linux_105_154052.tar.gz -C /tmp/ && /tmp/ArcGISServer/Setup -m silent -l yes -a /tmp/ArcGISServer105all.ecp
+
+#对外暴露相关端口
+EXPOSE 1098 4000 4001 4002 4003 4004 6006 6080 6099 6443
+
+RUN rm /tmp/ArcGIS_Server_Linux_105_154052.tar.gz && rm -rf /tmp/ArcGISServer
+
+#启动服务前必须先挂载公共存储目录
+RUN mkdir -p /usr/local/arcgis/gisdata
+#CMD /usr/local/arcgis/server/startserver.sh && tail -f /usr/local/arcgis/server/framework/etc/service_error.log
+#CMD ["/usr/local/arcgis/server/startserver.sh"]
+
+#容器运行后默认执行的指令
+#ENTRYPOINT ["/usr/local/arcgis/server/startserver.sh"]
+
+#------------------------------------------------------------------------------------------------------------------------
+#构建镜像
+#docker build -t="zhouning/ags105" .
+
+#运行镜像
+#docker-machine ssh default
+#sudo docker run --name agsxxx -d --hostname agsxxx -p 6080:6080 -p 6443:6443 -v $PWD/gisdata:/usr/local/arcgis/gisdata ags105 /usr/local/arcgis/server/startserver.sh
