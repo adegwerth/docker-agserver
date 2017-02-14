@@ -7,7 +7,7 @@ MAINTAINER	Ning Zhou "zn19860115@gmail.com"
 COPY ./* /tmp/
 
 
-RUN apt-get update && apt-get install -y net-tools && apt-get install -y wget && apt-get install -y libXtst && apt-get install -y libXi && apt-get install -y libXrender && apt-get install -y fontconfig && apt-get install -y freetype && apt-get install -y gettext && apt-get install -y libXfont && apt-get install -y mesa-libGL && apt-get install -y mesa-libGLU && apt-get install -y Xvfb && apt-get install -y vim && apt-get install -y tar && apt-get install -y hostname && apt-get install -y gettext-base && apt-get install -y libxtst6 && apt-get install -y libxi6 && apt-get install -y libxrender1
+RUN apt-get update && apt-get install -y wget && apt-get install -y fontconfig && apt-get install -y freetype && apt-get install -y gettext && apt-get install -y libXfont && apt-get install -y mesa-libGL && apt-get install -y mesa-libGLU && apt-get install -y Xvfb && apt-get install -y vim && apt-get install -y tar && apt-get install -y hostname && apt-get install -y gettext-base && apt-get install -y libxtst6 && apt-get install -y libxi6 && apt-get install -y libxrender1
 
 #ADD指令会自动解压tar文件
 #ADD . /src
