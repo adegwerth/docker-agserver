@@ -14,34 +14,34 @@ RUN yum -y update && \
     yum -y install gettext net-tools fontconfig freetype libXfont libXtst libXi libXrender mesa-libGL mesa-libGLU Xvfb
 
 # add the contents of the build directory to the /src directory of the image.
-ADD . /src
+COPY ./ArcGIS_for_Server_Linux_1041_151978.tar.gz /tmp
+COPY ./ags104.ecp /tmp
 
 # make sure that the arcgis user account exists and that it has permission to modify files
 # in the installation and source paths.
-RUN /usr/sbin/useradd --create-home --home-dir /usr/local/arcgis --shell /bin/bash arcgis
-RUN chown -R arcgis /src && chmod -R 700 /src && \
-    chown -R arcgis /usr/local/arcgis && chmod -R 700 /usr/local/arcgis
+RUN groupadd arcgis && \
+    useradd -m -r arcgis -g arcgis && \
+    mkdir -p /arcgis/server && \
+    chown -R arcgis:arcgis /arcgis && \
+    chown -R arcgis:arcgis /tmp && \
+    chmod -R 755 /arcgis
+
+RUN echo -e "arcgis soft nofile 65535\narcgis hard nofile 65535\narcgis soft nproc 25059\narcgis hard nproc 25059" >> /etc/security/limits.conf
 
 # switch to the arcgis user account to setup the environment.
 USER arcgis
 
-# the path where ArcGIS for Server 10.4.1 should be installed.
-ENV HOME /usr/local/arcgis
+RUN tar xvzf /tmp/ArcGIS_for_Server_Linux_1041_151978.tar.gz -C /tmp/ && \
+    /tmp/ArcGISServer/Setup -m silent -l yes -a /tmp/ags104.ecp -d /
 
-# install ArcGIS for Server 10.4.1 using slient installation.
-RUN tar xvzf /src/ArcGIS_for_Server_Linux_1041_151978.tar.gz -C /tmp/ && \
-    rm /src/ArcGIS_for_Server_Linux_1041_151978.tar.gz
+RUN rm /tmp/ArcGIS_for_Server_Linux_1041_151978.tar.gz && \
+    rm /tmp/ags104.ecp && \
+    rm -rf rf /tmp/ArcGISServer
 
-RUN /tmp/ArcGISServer/Setup -m silent -l yes -a /src/ags104.ecp
-
-# remove the temporary files created during the installation process.
-RUN rm -rf /tmp/ArcGISServer \
-    && mv /src/init.sh /usr/local/arcgis \
-    && rm -rf /src
-
+COPY ./init.sh /arcgis
 # expose ports used for connecting to services and other site machines
 # but not ones that are used for internal purposes.
 EXPOSE 1098 4000 4001 4002 4003 4004 6006 6080 6099 6443
 
 # execute the init script.
-CMD ["/bin/bash", "/usr/local/arcgis/init.sh"]
+CMD ["/arcgis/init.sh"]

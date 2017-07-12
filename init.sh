@@ -1,14 +1,14 @@
 #!/bin/bash
-AGS_HOME="/usr/local/arcgis/server"
+AGS_HOME="/arcgis/server"
 
 # a function to start arcgis server using its startup script.
 function start_arcgis_server {
-    /bin/bash ${AGS_HOME}/startserver.sh
+    ${AGS_HOME}/startserver.sh
 }
 
 # a function to stop arcgis server using its shutdown script.
 function stop_arcgis_server {
-    /bin/bash ${AGS_HOME}/stopserver.sh
+    ${AGS_HOME}/stopserver.sh
 }
 
 # a function that spins, stopping every 1s to check if any arcgis
