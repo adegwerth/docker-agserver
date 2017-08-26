@@ -11,11 +11,14 @@ LABEL name="ArcGIS for Server Advanced Enterprise" \
 
 # update and install required packaged from yum.
 RUN yum -y update && \
-    yum -y install gettext net-tools fontconfig freetype libXfont libXtst libXi libXrender mesa-libGL mesa-libGLU Xvfb
+    yum -y install gettext net-tools fontconfig freetype libXfont libXtst \
+        libXi libXrender mesa-libGL mesa-libGLU Xvfb && \
+    yum clean all && \
+    rm -rf /var/cache/yum
 
 # add the contents of the build directory to the /src directory of the image.
-COPY ./ArcGIS_for_Server_Linux_1041_151978.tar.gz /tmp
 COPY ./ags104.ecp /tmp
+COPY ./ArcGIS_for_Server_Linux_1041_151978.tar.gz /tmp
 
 # make sure that the arcgis user account exists and that it has permission to modify files
 # in the installation and source paths.
