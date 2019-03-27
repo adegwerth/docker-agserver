@@ -12,7 +12,7 @@ function stop_arcgis_server {
 }
 
 # a function that spins, stopping every 1s to check if any arcgis
-# processes are running. the loop terminates when no running arcgis 
+# processes are running. the loop terminates when no running arcgis
 # processesa are found.
 function wait_for_exit {
     while pgrep -f ${AGS_HOME} > /dev/null; do
