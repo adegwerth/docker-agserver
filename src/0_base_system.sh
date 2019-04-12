@@ -1,9 +1,6 @@
-#!/usr/bin/env bash
-### every exit != 0 fails the script
-set -e
+#!/bin/sh -e
 
 apt-get update && apt-get upgrade -y
-# apt install fontconfig freetype libXfont mesa-libGL mesa-libGLU Xvfb hostname gettext-base libxtst6 libxi6 libxrender1
 apt-get install -y --no-install-recommends curl gettext-base net-tools locales libglib2.0-0
 
 /usr/sbin/useradd --create-home --home-dir /arcgis --shell /bin/bash arcgis

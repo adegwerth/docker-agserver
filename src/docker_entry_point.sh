@@ -1,4 +1,5 @@
-#!/bin/bash -e
+#!/bin/sh -e
+
 AGS_HOME="/arcgis/server"
 LICENSE_MARK="/arcgis/keycode"
 
@@ -6,8 +7,8 @@ if [ ! -e $LICENSE_MARK ]; then
   echo "First start, need to authorize arcgis for server"
   ${AGS_HOME}/tools/authorizeSoftware -f $LICENSE_FILE
   echo "Licensed" > $LICENSE_MARK
-  echo "software authorized! Wait for 10 seconds and start server"
-  /bin/sleep 10
+  echo "software authorized, wait for 3 seconds to start server"
+  /bin/sleep 3
 else
   echo "Restart, no need to authorize!"
 fi

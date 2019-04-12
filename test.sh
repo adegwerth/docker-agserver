@@ -1,7 +1,4 @@
 #!/bin/sh -e
-docker run --tty --interactive --ulimit nofile=65535 --ulimit nproc=25059 \
-  --volume $(pwd)/src:/src --publish 6080:6080 --publish 6443:6443 \
-  --hostname agserver.local ubuntu:18.04
 
 docker run --tty --interactive --hostname agserver.local \
   --name agserver \
