@@ -1,19 +1,9 @@
-#!/usr/bin/env bash
-### every exit != 0 fails the script
-set -e
+#!/bin/bash -e
+curl --location --out /arcgis/ArcGIS_Server_Linux_1061_164044.tar.gz \
+  http://172.17.0.1/ArcGIS_Server_Linux_1061_164044.tar.gz
 
-cd /arcgis
-curl --location --out ArcGIS_Server_Linux_1061_164044.tar.gz \
-  http://192.168.2.14/ArcGIS_Server_Linux_1061_164044.tar.gz
+tar -zxvf /arcgis/ArcGIS_Server_Linux_1061_164044.tar.gz -C /arcgis/
+rm /arcgis/ArcGIS_Server_Linux_1061_164044.tar.gz
 
-tar -zxvf ArcGIS_Server_Linux_1061_164044.tar.gz
-rm ArcGIS_Server_Linux_1061_164044.tar.gz
-
-cd ArcGISServer
-./Setup -m silent -l yes
-cd ..
-rm -rf ArcGISServer
-
-curl --out ags106.eap http://192.168.2.14/ags106.ecp
-server/tools/authorizeSoftware -f ags106.ecp
-rm ags106.ecp
+/arcgis/ArcGISServer/Setup -m silent -l yes -d /
+rm -rf /arcgis/ArcGISServer

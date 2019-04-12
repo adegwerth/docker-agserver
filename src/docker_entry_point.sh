@@ -1,5 +1,16 @@
-#!/bin/bash
+#!/bin/bash -e
 AGS_HOME="/arcgis/server"
+LICENSE_MARK="/arcgis/keycode"
+
+if [ ! -e $LICENSE_MARK ]; then
+  echo "First start, need to authorize arcgis for server"
+  ${AGS_HOME}/tools/authorizeSoftware -f $LICENSE_FILE
+  echo "Licensed" > $LICENSE_MARK
+  echo "software authorized! Wait for 10 seconds and start server"
+  /bin/sleep 10
+else
+  echo "Restart, no need to authorize!"
+fi
 
 # a function to start arcgis server using its startup script.
 function start_arcgis_server {
