@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 
 curl --location --out /arcgis/ArcGIS_Server_Linux_1061_164044.tar.gz \
   http://172.17.0.1/ArcGIS_Server_Linux_1061_164044.tar.gz

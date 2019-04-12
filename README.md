@@ -1,20 +1,10 @@
-ArcGIS Server on Docker
+# ArcGIS Server on Docker
 
--Download ArcGIS Server for linux install
-
--Get an .ecp license file
-
--put both files in the same location as the Dockerfile
-
--build the Dockerfile
-
--run in a container
-
-docker run -it -p 6080:6080 <imagename> bash
-
-#inside container
-cd /usr/local/arcgis/server
-
-./startserver.sh
-
-Open ArcGIS Manager and finish setup.
+```sh
+docker run --tty --interactive --hostname agserver.local \
+  --name agserver \
+  --volume $HOME/Documents/ags106.ecp:/arcgis/ags106.ecp \
+  --env LICENSE_FILE=/arcgis/ags106.ecp \
+  --publish 6080:6080 -p 6443:6443 \
+  beginor/agserver:10.6.1
+```

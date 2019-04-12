@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 
 apt-get update && apt-get upgrade -y
 apt-get install -y --no-install-recommends curl gettext-base net-tools locales libglib2.0-0

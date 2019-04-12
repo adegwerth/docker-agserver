@@ -1,11 +1,11 @@
-#!/bin/sh -e
+#!/bin/bash -e
 
-AGS_HOME="/arcgis/server"
-LICENSE_MARK="/arcgis/keycode"
+AGS_HOME=/arcgis/server
+LICENSE_MARK=/arcgis/keycode
 
 if [ ! -e $LICENSE_MARK ]; then
   echo "First start, need to authorize arcgis for server"
-  ${AGS_HOME}/tools/authorizeSoftware -f $LICENSE_FILE
+  $AGS_HOME/tools/authorizeSoftware -f $LICENSE_FILE
   echo "Licensed" > $LICENSE_MARK
   echo "software authorized, wait for 3 seconds to start server"
   /bin/sleep 3
@@ -15,19 +15,19 @@ fi
 
 # a function to start arcgis server using its startup script.
 function start_arcgis_server {
-    ${AGS_HOME}/startserver.sh
+    $AGS_HOME/startserver.sh
 }
 
 # a function to stop arcgis server using its shutdown script.
 function stop_arcgis_server {
-    ${AGS_HOME}/stopserver.sh
+    $AGS_HOME/stopserver.sh
 }
 
 # a function that spins, stopping every 1s to check if any arcgis
 # processes are running. the loop terminates when no running arcgis
 # processesa are found.
 function wait_for_exit {
-    while pgrep -f ${AGS_HOME} > /dev/null; do
+    while pgrep -f $AGS_HOME > /dev/null; do
         /bin/sleep 1
     done
     echo "All ArcGIS Server processes have stopped."
